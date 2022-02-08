@@ -80,3 +80,25 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     }
   });
 };
+
+export const updateConvoInStore = (state, data) =>
+  state.map((cur) => {
+    if (cur.id === data.id) {
+      const newConvo = Object.assign({}, data);
+      return newConvo;
+    } else {
+      return cur;
+    }
+  });
+
+export const checkForMutualConvo = (state, data) => {
+  return state.map((cur) => {
+    if (cur.id === data[0].convoid && cur.otherUser.online === true) {
+      const storeData = Object.assign({}, cur);
+      storeData.mutualConv = [...data];
+      return storeData;
+    } else {
+      return cur;
+    }
+  });
+};

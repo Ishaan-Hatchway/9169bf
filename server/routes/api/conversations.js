@@ -106,6 +106,9 @@ router.put('/:convoId', async (req, res, next) => {
       include: [{ model: Message, order: ['createdAt', 'ASC'] }],
     });
 
+    if (![getConvo.user1Id, getConvo.user2Id].includes(user.id))
+      return res.sendStatus(403);
+
     const unreadMessageId = getConvo
       .toJSON()
       .messages.filter((cur) => cur.readMessage === false)

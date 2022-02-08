@@ -10,21 +10,18 @@ const Messages = (props) => {
   const { messages, otherUser, userId, convo } = props;
 
   useEffect(() => {
-    messages.forEach((cur, _, arr) => {
-      if (cur.id === arr.at(-1).id && cur.readMessage === true) {
-        return setReadMarker(true);
-      } else if (cur.id === arr.at(-1).id && arr.at(-1).readMessage === false) {
-        setReadMarker(false);
-      }
-    });
+    if (messages.length && messages?.at(-1).readMessage) {
+      setReadMarker(true);
+    } else if (messages.length && !messages?.at(-1).readMessage) {
+      setReadMarker(false);
+    }
 
     async function exceptionalRead() {
       if (
         messages.length &&
         messages.at(-1).senderId === otherUser.id &&
-        messages.at(-1).readMessage === false
+        !messages.at(-1).readMessage
       ) {
-        if (messages.at(-1).senderId === userId) console.log('ch');
         await props.readMessages(convo.id);
       }
     }

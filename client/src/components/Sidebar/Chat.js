@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { BadgeAvatar, ChatContent } from '../Sidebar';
 import { makeStyles } from '@material-ui/core/styles';
@@ -26,8 +26,12 @@ const Chat = (props) => {
   const { conversation } = props;
   const { otherUser, messages } = conversation;
 
-  const unread = messages.filter(
-    (cur) => cur.senderId === otherUser.id && cur.readMessage === false
+  const unread = useMemo(
+    () =>
+      messages.filter(
+        (cur) => cur.senderId === otherUser.id && cur.readMessage === false
+      ),
+    [messages, otherUser.id]
   );
 
   const handleClick = async (conversation) => {

@@ -114,7 +114,7 @@ export const postMessage = (body) => async (dispatch) => {
 
 export const readMessages = (convoId) => async (dispatch) => {
   try {
-    const res = await axios.put(`/api/conversations/${convoId}/`);
+    const res = await axios.put(`/api/conversations/${convoId}`);
     const {
       data: { conversation: updatedConvo },
     } = res;
@@ -127,7 +127,7 @@ export const readMessages = (convoId) => async (dispatch) => {
 export const mutualConvoId = (convoId) => async (dispatch) => {
   try {
     const res = await axios.put(
-      `/api/conversations//convo-for-user/${convoId}/`
+      `/api/conversations//convo-for-user/${convoId}`
     );
     const {
       data: { mutualConvo },

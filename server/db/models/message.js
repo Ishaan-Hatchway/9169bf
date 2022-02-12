@@ -14,10 +14,6 @@ const Message = db.define("message", {
     type: Sequelize.BOOLEAN,
     allowNull: false,
   },
-  groupId: {
-    type: Sequelize.INTEGER,
-    defaultValue: 0,
-  },
 });
 
 module.exports = Message;

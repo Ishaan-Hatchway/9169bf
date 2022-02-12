@@ -1,9 +1,15 @@
-const { Op } = require('sequelize');
-const db = require('../db');
-const Message = require('./message');
-const User = require('./user');
+const { Op, Sequelize } = require("sequelize");
+const db = require("../db");
+const Message = require("./message");
+const User = require("./user");
 
-const Conversation = db.define('conversation', {});
+const Conversation = db.define("conversation", {
+  chatType: {
+    type: Sequelize.ENUM("Group", "Personal"),
+    defaultValue: "Personal",
+    allowNull: false,
+  },
+});
 
 // find conversation given two user Ids
 
@@ -28,30 +34,30 @@ Conversation.findConvoById = async function (convoId, userId) {
     where: {
       id: convoId,
     },
-    attributes: ['id'],
-    order: [[Message, 'createdAt', 'ASC']],
+    attributes: ["id"],
+    order: [[Message, "createdAt", "ASC"]],
     include: [
-      { model: Message, order: ['createdAt', 'ASC'] },
+      { model: Message, order: ["createdAt", "ASC"] },
       {
         model: User,
-        as: 'user1',
+        as: "user1",
         where: {
           id: {
             [Op.not]: userId,
           },
         },
-        attributes: ['id', 'username', 'photoUrl'],
+        attributes: ["id", "username", "photoUrl"],
         required: false,
       },
       {
         model: User,
-        as: 'user2',
+        as: "user2",
         where: {
           id: {
             [Op.not]: userId,
           },
         },
-        attributes: ['id', 'username', 'photoUrl'],
+        attributes: ["id", "username", "photoUrl"],
         required: false,
       },
     ],
